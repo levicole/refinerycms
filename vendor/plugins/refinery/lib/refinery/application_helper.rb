@@ -56,8 +56,8 @@ module Refinery::ApplicationHelper
   # If you use this function then whenever we update or relocate the version of jquery or jquery ui in use
   # we will update the reference here and your existing application starts to use it.
   # Use <%= jquery_include_tags %> to include it in your <head> section.
-  def jquery_include_tags(use_caching = RefinerySetting.find_or_set(:use_resource_caching, false),
-                          use_google = RefinerySetting.find_or_set(:use_google_ajax_libraries, true))
+  def jquery_include_tags(use_caching = RefinerySetting.find_or_set(:use_resource_caching, true),
+                          use_google = RefinerySetting.find_or_set(:use_google_ajax_libraries, false))
     # render the tags normally unless
     unless use_google and !local_request?
       javascript_include_tag 'jquery', 'jquery-ui-1.8.min.js', :cache => (use_caching ? "cache/libraries" : nil)
@@ -92,7 +92,7 @@ module Refinery::ApplicationHelper
     title = []
     objects = (options[:chain_page_title] and object.respond_to?(:ancestors)) ? [object.ancestors, object] : [object]
 
-    objects.flatten.each do |obj|
+    objects.flatten.compact.each do |obj|
       if obj.respond_to?(:custom_title_type)
         title << case obj.custom_title_type
           when "text"
