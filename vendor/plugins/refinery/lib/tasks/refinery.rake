@@ -3,69 +3,83 @@ namespace :refinery do
   desc "Override files for use in an application"
   task :override => :environment do
     require 'fileutils'
-    
-    if THEME.exist?
-      # Prepare the basic structure for the theme directory
-      dirs = ["themes", "themes/#{THEME}", "themes/#{THEME}/views", "themes/#{THEME}/views/layouts", "themes/#{THEME}/views/shared", "themes/#{THEME}/views/pages", "themes/#{THEME}/stylesheets", "themes/#{THEME}/javascripts", "themes/#{THEME}/images"]
-		  dirs.each do |dir|
-			  dir = Rails.root.join(dir.split('/').join(File::SEPARATOR))
-			  dir.mkdir unless dir.directory?
-		  end
-		else
-		  # Prepare the basic structure for the app directory
-      dirs = ["app", "app/views", "app/views/layouts", "app/views/admin", "app/views/shared", "app/controllers", "app/models", "app/controllers/admin", "app/helpers", "app/helpers/admin"]
-		  dirs.each do |dir|
-			  dir = Rails.root.join(dir.split('/').join(File::SEPARATOR))
-			  dir.mkdir unless dir.directory?
-		  end
-		end
-    
-    if VIEW.exist? || CONTROLLER.exist? || MODEL.exist?
-    
-=begin
-      # copy the controller
-      unless controller_with_admin =~ /\*(\*)?/ and !action.nil?
-        refinery_controllers = Dir[refinery_root.join("vendor", "plugins", "**", "app", "controllers", "#{controller_with_admin}_controller.rb")].compact
-        if refinery_controllers.any? # the controllers may not exist.
-          refinery_controllers.each do |refinery_controller|
-            # make the directories
-            FileUtils.mkdir_p(copy_to = rails_root.join("app", "controllers", admin).to_s)
-            FileUtils.cp(refinery_controller, copy_to)
+
+    if (view = ENV["view"]).present?
+      pattern = "#{view.split("/").join(File::SEPARATOR)}*.erb"
+      looking_for = Refinery::Plugins.registered.pathnames.map{|p| p.join("app", "views", pattern).to_s}
+
+      # copy in the matches
+      matches = looking_for.collect{|d| Dir[d]}.flatten.compact.uniq
+      if matches.any?
+        matches.each do |match|
+          dir = match.split("/app/views/").last.split('/')
+          file = dir.pop # get rid of the file.
+          dir = dir.join(File::SEPARATOR) # join directory back together
+
+          unless (theme = ENV["theme"]).present?
+            destination_dir = Rails.root.join("app", "views", dir)
+          else
+            destination_dir = Rails.root.join("themes", theme, "views", dir)
           end
-        else
-          puts "Note: Couldn't find a matching controller to override."
-        end
-      end
+          FileUtils.mkdir_p(destination_dir)
+          FileUtils.cp match, (destination = File.join(destination_dir, file))
 
-      # copy the action, if it exists
-      unless action.nil? or action.length == 0
-        # get all the matching files
-        looking_for = refinery_root.join("vendor", "plugins", "**", "app", "views", controller_with_admin.split("/").join(File::SEPARATOR), "#{action}*.erb")
-        action_files = Dir[looking_for]
-
-        # copy in the action template
-        action_files.each do |action_file|
-          action_file_path = action_file.split("/app/views/").last
-          action_file_dir = action_file_path.split('/')
-          action_file_dir.pop # get rid of the file.
-
-          FileUtils.mkdir_p(rails_root.join("app", "views", action_file_dir.join(File::SEPARATOR)))
-          FileUtils.cp action_file, rails_root.join("app", "views", action_file_path)
+          puts "Copied view template file to #{destination.gsub("#{Rails.root.to_s}#{File::SEPARATOR}", '')}"
         end
       else
-        puts "Note: No action was specified."
+        puts "Couldn't match any view template files in any engines like #{view}"
+      end
+    elsif (controller = ENV["controller"]).present?
+      pattern = "#{controller.split("/").join(File::SEPARATOR)}*.rb"
+      looking_for = Refinery::Plugins.registered.pathnames.map{|p| p.join("app", "controllers", pattern).to_s}
+
+      # copy in the matches
+      matches = looking_for.collect{|d| Dir[d]}.flatten.compact.uniq
+      if matches.any?
+        matches.each do |match|
+          dir = match.split("/app/controllers/").last.split('/')
+          file = dir.pop # get rid of the file.
+          dir = dir.join(File::SEPARATOR) # join directory back together
+
+          destination_dir = Rails.root.join("app", "controllers", dir)
+          FileUtils.mkdir_p(destination_dir)
+          FileUtils.cp match, (destination = File.join(destination_dir, file))
+
+          puts "Copied controller file to #{destination.gsub("#{Rails.root.to_s}#{File::SEPARATOR}", '')}"
+        end
+      else
+        puts "Couldn't match any controller files in any engines like #{controller}"
+      end
+    elsif (model = ENV["model"]).present?
+      pattern = "#{model.split("/").join(File::SEPARATOR)}*.rb"
+      looking_for = Refinery::Plugins.registered.pathnames.map{|p| p.join("app", "models", pattern).to_s}
+
+      # copy in the matches
+      matches = looking_for.collect{|d| Dir[d]}.flatten.compact.uniq
+      if matches.any?
+        matches.each do |match|
+          dir = match.split("/app/models/").last.split('/')
+          file = dir.pop # get rid of the file.
+          dir = dir.join(File::SEPARATOR) # join directory back together
+
+          destination_dir = Rails.root.join("app", "models", dir)
+          FileUtils.mkdir_p(destination_dir)
+          FileUtils.cp match, (destination = File.join(destination_dir, file))
+
+          puts "Copied model file to #{destination.gsub("#{Rails.root.to_s}#{File::SEPARATOR}", '')}"
+        end
+      else
+        puts "Couldn't match any model files in any engines like #{model}"
       end
     else
       puts "You didn't specify anything to override. Here's some examples:"
-      puts "refinery-override /pages/* /path/to/my/project"
-      puts "refinery-override /pages/show /path/to/my/project"
-      puts "refinery-override /admin/pages/index"
-      puts "refinery-override /shared/_menu /path/to/my/project"
-      puts "refinery-override **/*menu /path/to/my/project"
-      puts "refinery-override /shared/_menu_branch"
+      puts "rake refinery:override view=pages/home"
+      puts "rake refinery:override controller=pages"
+      puts "rake refinery:override model=page"
+      puts "rake refinery:override view=pages/home theme=demolicious"
+      puts "rake refinery:override **/*menu"
+      puts "rake refinery:override shared/_menu_branch"
     end
-=end
-
   end
 
   desc "Required to upgrade from <= 0.9.0 to 0.9.1 and above"
@@ -81,7 +95,7 @@ namespace :refinery do
     end
 
   end
-  
+
   desc "Update the core files with the gem"
   task :update => :environment do
     require 'fileutils'
@@ -98,22 +112,27 @@ namespace :refinery do
     end
 
     # copy in any new migrations.
-    FileUtils::cp Dir[File.join(%W(#{Refinery.root} db migrate *.rb))], File.join(%W(#{Rails.root} db migrate))
+    FileUtils::cp Dir[Refinery.root.join("db", "migrate", "*.rb").cleanpath.to_s], Rails.root.join("db", "migrate").cleanpath.to_s
 
-    # replace rakefile.
-    FileUtils::cp File.join(%W(#{Refinery.root} Rakefile)), File.join(%W(#{Rails.root} Rakefile))
+    # replace rakefile and gemfile.
+    FileUtils::cp Refinery.root.join("Rakefile").cleanpath.to_s, Rails.root.join("Rakefile").cleanpath.to_s
+    unless Rails.root.join("Gemfile").exist?
+      FileUtils::cp Refinery.root.join("Gemfile").cleanpath.to_s, Rails.root.join("Gemfile").cleanpath.to_s
+    else
+      # TODO only override refinery gems here.
+    end
 
     # replace the preinitializer.
-    FileUtils::cp File.join(%W(#{Refinery.root} config preinitializer.rb)), File.join(%W(#{Rails.root} config preinitializer.rb))
+    FileUtils::cp Refinery.root.join("config", "preinitializer.rb").cleanpath.to_s, Rails.root.join("config", "preinitializer.rb").cleanpath.to_s
 
     # copy the lib/refinery directory in
-    FileUtils::cp_r File.join(%W(#{Refinery.root} lib refinery)), File.join(Rails.root, "lib")
+    FileUtils::cp_r Refinery.root.join("lib", "refinery").cleanpath.to_s, Rails.root.join("lib").cleanpath.to_s
 
     # get current secret key
-    if !File.exist?(File.join(%W(#{Rails.root} config application.rb)))
-      lines = File.open(File.join(%W(#{Rails.root} config environment.rb)), "r").read.split("\n")
+    unless Rails.root.join("config", "application.rb").exist?
+      lines = Rails.root.join("config", "environment.rb").read.split("\n")
     else
-      lines = File.open(File.join(%W(#{Rails.root} config application.rb)), "r").read.split("\n")
+      lines = Rails.root.join("config", "application.rb").read.split("\n")
     end
 
     secret_key = ""
@@ -125,43 +144,42 @@ namespace :refinery do
     end
 
     # read in the config files
-    if File.exist?(File.join(%W(#{Rails.root} config application.rb)))
-      FileUtils::cp File.join(%W(#{Refinery.root} config environment.rb)), File.join(%W(#{Rails.root} config environment.rb))
+    if Rails.root.join("config", "application.rb").exist?
+      FileUtils::cp Refinery.root.join("config", "environment.rb").cleanpath.to_s, Rails.root.join("config", "environment.rb").cleanpath.to_s
     else
       # write the new content into the file.
-      FileUtils::cp File.join(%W(#{Refinery.root} config application.rb)), File.join(%W(#{Rails.root} config application.rb))
+      FileUtils::cp Refinery.root.join("config", "application.rb").cleanpath.to_s, Rails.root.join("config", "application.rb").cleanpath.to_s
 
-      app_rb_lines = File.open(File.join(%W(#{Rails.root} config application.rb)), "r").read.split("\n")
-      app_rb_lines.each do |line|
+      (app_rb_lines = Rails.root.join("config", "application.rb").read.split('\n')).each do |line|
         secret_match = line.scan(/(:secret)([^']*)([\'])([^\']*)/).flatten.last
         line.gsub!(secret_match, secret_key) unless secret_match.nil?
       end
 
       # write the new content into the file.
-      File.open(File.join(%W(#{Rails.root} config application.rb)), "w").puts(app_rb_lines.join("\n"))
+      Rails.root.join("config", "application.rb").open("w").puts(app_rb_lines.join('\n'))
 
-      FileUtils::cp File.join(%W(#{Refinery.root} config environment.rb)), File.join(%W(#{Rails.root} config environment.rb))
+      FileUtils::cp Refinery.root.join('config', 'environment.rb').cleanpath.to_s, Rails.root.join('config', 'environment.rb').cleanpath.to_s
     end
 
-    unless File.exist?(File.join(%W(#{Rails.root} config settings.rb)))
-      FileUtils::cp(File.join(%W(#{Refinery.root} config settings.rb)), File.join(%W(#{Rails.root} config settings.rb)))
+    unless Rails.root.join("config", "settings.rb").exist?
+      FileUtils::cp(Refinery.root.join('config', 'settings.rb').cleanpath.to_s, Rails.root.join('config', 'settings.rb').cleanpath.to_s)
     end
 
     app_config_file = "application.rb"
 
-    app_config = File.open(File.join(%W(#{Rails.root} config #{app_config_file})), "r").read
+    app_config = Rails.root.join("config", app_config_file).read
 
     # copy new jquery javascripts.
-    FileUtils.cp File.join(%W(#{Refinery.root} public javascripts jquery.js)), File.join(%W(#{Rails.root} public javascripts jquery.js))
-    FileUtils.cp File.join(%W(#{Refinery.root} public javascripts jquery-ui-1.8.min.js)), File.join(%W(#{Rails.root} public javascripts jquery-ui-1.8.min.js))
+    FileUtils.cp Refinery.root.join('public', 'javascripts', 'jquery.js').cleanpath.to_s, Rails.root.join('public', 'javascripts', 'jquery.js').cleanpath.to_s
+    FileUtils.cp Refinery.root.join('public', 'javascripts', 'jquery-ui.js').cleanpath.to_s, Rails.root.join('public', 'javascripts', 'jquery-ui.js').cleanpath.to_s
 
     # backup the config file.
-    FileUtils.cp File.join(%W(#{Rails.root} config #{app_config_file})), File.join(%W(#{Rails.root} config #{app_config_file.gsub(".rb", "")}.autobackupbyrefinery.rb))
+    FileUtils.cp Rails.root.join('config', app_config_file).cleanpath.to_s, Rails.root.join('config', "#{app_config_file.gsub('.rb', '')}.autobackupbyrefinery.rb").cleanpath.to_s
 
     # copy the new config file.
-    FileUtils.cp File.join(%W(#{Refinery.root} config #{app_config_file})), File.join(%W(#{Rails.root} config #{app_config_file}))
+    FileUtils.cp Refinery.root.join('config', app_config_file).cleanpath.to_s, Rails.root.join('config', app_config_file).cleanpath.to_s
 
-    unless ARGV.include?("--from-refinery-installer")
+    unless (ENV["from_installer"] || 'false').to_s == 'true'
       puts "---------"
       puts "Copied new Refinery core assets."
       puts "I've made a backup of your current config/#{app_config_file} file as it has been updated with the latest Refinery requirements."
@@ -169,18 +187,16 @@ namespace :refinery do
       puts ""
       puts "=== ACTION REQUIRED ==="
       puts "Please run rake db:migrate to ensure your database is at the correct version."
-      puts "Please also run rake gems:install to ensure you have the currently specified gems."
+      puts "Please also run bundle install to ensure you have the currently specified gems."
       puts ""
     end
   end
 
-  end
-  
   namespace :cache do
     desc "Eliminate existing cache files for javascript and stylesheet resources in default directories"
     task :clear => :environment do
-      FileUtils.rm(Dir[Rails.root.join("public", "javascripts", "cache", "[^.]*")])
-      FileUtils.rm(Dir[Rails.root.join("public", "stylesheets", "cache", "[^.]*")])
+      FileUtils.rm(Dir[Rails.root.join("public", "javascripts", "cache", "[^.]*").cleanpath.to_s])
+      FileUtils.rm(Dir[Rails.root.join("public", "stylesheets", "cache", "[^.]*").cleanpath.to_s])
     end
   end
 

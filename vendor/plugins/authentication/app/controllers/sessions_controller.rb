@@ -6,13 +6,11 @@ class SessionsController < ApplicationController
 
   def new
     @session = UserSession.new
-    flash.now[:notice] = "Hello, please sign into #{RefinerySetting[:site_name]}"
   end
 
   def create
     if (@session = UserSession.create(params[:session])).valid?
-      redirect_back_or_default(admin_root_url)
-      flash[:notice] = "Logged in successfully"
+      redirect_back_or_default(admin_root_url, :notice => "Logged in successfully")
     else
       render :action => 'new'
     end
@@ -20,8 +18,7 @@ class SessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy if logged_in?
-    flash[:notice] = "You have been logged out."
-    redirect_back_or_default(new_session_url)
+    redirect_back_or_default(root_url, :notice => "You have been logged out.")
   end
 
 protected
@@ -33,7 +30,5 @@ protected
   def redirect_to_new
     redirect_to :action => "new"
   end
-
-  def take_down_for_maintenance?;end
 
 end
