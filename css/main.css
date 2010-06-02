@@ -10,6 +10,7 @@
 /* Imports */
 @import url("reset.css");
 @import url("global-forms.css");
+@import url("code.css");
  
 /***** Global *****/
 /* Body */
@@ -25,28 +26,31 @@
 	}
  
 /* Headings */
+h1 {font-size: 2em}
 h2 {font-size: 1.571em}	/* 22px */
 h3 {font-size: 1.429em}	/* 20px */
 h4 {font-size: 1.286em}	/* 18px */
 h5 {font-size: 1.143em}	/* 16px */
 h6 {font-size: 1em}		/* 14px */
  
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 	line-height: 1.1;
 	margin-bottom: .8em;
 }
+
+h1 {font-weight: bold}
 	
 /* Anchors */
 a {outline: 0;}
 a img {border: 0px; text-decoration: none;}
 a:link, a:visited {
-	color: #C74350;
+	color: #DAA520;
 	padding: 0 1px;
 	text-decoration: underline;
 }
 a:hover, a:active {
-	background-color: #C74350;
+	background-color: #DAA520;
 	color: #fff;
 	text-decoration: none;
 	text-shadow: 1px 1px 1px #333;
@@ -132,7 +136,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 	}
 	#banner h1 a:hover, #banner h1 a:active {
 		background: none;
-		color: #C74350;
+		color: #DAA520;
 		text-shadow: none;
 	}
 	
@@ -166,7 +170,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 	}
 	#banner nav a:hover, #banner nav a:active,
 	#banner nav .active a:link, #banner nav .active a:visited {
-		background: #C74451;
+		background: #DAA520;
 		color: #fff;
 		text-shadow: none !important;
 	}
@@ -201,10 +205,12 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 	float: right;
 	margin: 0.786em 2em 0 5em;
 	width: 248px;
+	height: 84px;
+	background: #000;
 }
-#featured figure img {display: block; float: right;}
+#featured figure img {display: block; float: right; margin: 0.786em 2em 0 5em;}
  
-#featured h2 {color: #C74451; font-size: 1.714em; margin-bottom: 0.333em;}
+#featured h2 {color: #DAA520; font-size: 1.714em; margin-bottom: 0.333em;}
 #featured h3 {font-size: 1.429em; margin-bottom: .5em;}
  
 #featured h3 a:link, #featured h3 a:visited {color: #000305; text-decoration: none;}
@@ -233,7 +239,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 #extras ul {list-style: none; margin: 0;}
 #extras li {border-bottom: 1px solid #fff;}
 #extras h2 {
-	color: #C74350;
+	color: #DAA520;
 	font-size: 1.429em;
 	margin-bottom: .25em;
 	padding: 0 3px;
@@ -308,7 +314,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
  
 #about .url:link, #about .url:visited {text-decoration: none;}
  
-#about .bio {float: right; width: 500px;}
+#about .bio {float: right; width: 350px;}
  
 /*
 	Footer
@@ -338,11 +344,10 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 	#posts-list {list-style: none; margin: 0;}
 	#posts-list .hentry {padding-left: 200px; position: relative;}
 	#posts-list .hentry:hover {
-		background: #C64350;
-		color: #fff;
+		background: #DAA520;
 	}
 	#posts-list .hentry:hover a:link, #posts-list .hentry:hover a:visited {
-		color: #F6CF74;
+		color: #8B0000;
 		text-shadow: 1px 1px 1px #333;
 	}
 	

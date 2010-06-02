@@ -1,9 +1,9 @@
 <header id="banner" class="body">
-	<h1><a href="#">RefineryCMS Tutorials <span>Learn how to use the <del>second</del> <ins>very</ins> best rails cms</span></a></h1>
+	<h1><a href="{% unless page.title == 'home' %}.{% endunless %}./">RefineryCMS Tutorials <span>Learn how to use the <del>second</del> <ins>very</ins> best rails cms</span></a></h1>
 	<nav><ul>
-		<li class="active"><a href="/refinerycms/">home</a></li>
-		<li><a href="#">beginner</a></li>
-		<li><a href="#">intermediate</a></li>
-		<li><a href="#">advanced</a></li>
+		<li class="active"><a href="{% unless page.title == 'home' %}.{% endunless %}./">home</a></li>
+		<li><a href="{% unless page.title == 'home' %}.{% endunless %}./#beginner">beginner</a></li>
+		<li><a href="{% unless page.title == 'home' %}.{% endunless %}./#intermediate">intermediate</a></li>
+		<li><a href="{% unless page.title == 'home' %}.{% endunless %}./#advanced">advanced</a></li>
 	</ul></nav>
 </header><!-- /#banner -->

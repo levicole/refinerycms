@@ -6,9 +6,9 @@ title: home
 {% include feature.html %}
 
 <section id="content" class="body">
-	
+	<h2 id="beginner">Beginner</h2>
 	<ol id="posts-list" class="hfeed">
-	  {% for post in site.posts %}
+	  {% for post in site.categories.beginner %}
 		<li><article class="hentry">	
 			<header>
 				<h2 class="entry-title"><a href="{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}</a></h2>
@@ -20,12 +20,66 @@ title: home
 				</abbr>
 
 				<address class="vcard author">
-					<a class="url fn" href="#">{{ post.author }}</a>
+					{{ post.author }}
 				</address>
 			</footer><!-- /.post-info -->
 			
 			<div class="entry-content">
-				{{ post.content | truncate: 250 }}
+				<p>{{ post.description | truncate: 250 }}</p>
+			</div><!-- /.entry-content -->
+		</article></li>
+		{% endfor %}
+	</ol><!-- /#posts-list -->
+	
+	<br />
+	
+	<h2 id="intermediate">Intermediate</h2>
+	<ol id="posts-list" class="hfeed">
+	  {% for post in site.categories.intermediate %}
+		<li><article class="hentry">	
+			<header>
+				<h2 class="entry-title"><a href="./{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}</a></h2>
+			</header>
+			
+			<footer class="post-info">
+				<abbr class="published" title="{{ post.date }}"><!-- YYYYMMDDThh:mm:ss+ZZZZ -->
+					{{ post.date | date_to_string }}
+				</abbr>
+
+				<address class="vcard author">
+					{{ post.author }}
+				</address>
+			</footer><!-- /.post-info -->
+			
+			<div class="entry-content">
+				<p>{{ post.description | truncate: 250 }}</p>
+			</div><!-- /.entry-content -->
+		</article></li>
+		{% endfor %}
+	</ol><!-- /#posts-list -->
+	
+	<br />
+	
+	<h2 id="advanced">Advanced</h2>
+	<ol id="posts-list" class="hfeed">
+	  {% for post in site.categories.advanced %}
+		<li><article class="hentry">	
+			<header>
+				<h2 class="entry-title"><a href="{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}</a></h2>
+			</header>
+			
+			<footer class="post-info">
+				<abbr class="published" title="{{ post.date }}"><!-- YYYYMMDDThh:mm:ss+ZZZZ -->
+					{{ post.date | date_to_string }}
+				</abbr>
+
+				<address class="vcard author">
+					{{ post.author }}
+				</address>
+			</footer><!-- /.post-info -->
+			
+			<div class="entry-content">
+				<p>{{ post.description | truncate: 250 }}</p>
 			</div><!-- /.entry-content -->
 		</article></li>
 		{% endfor %}
