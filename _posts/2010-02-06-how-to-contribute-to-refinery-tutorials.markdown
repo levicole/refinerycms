@@ -1,9 +1,9 @@
---
+---
 layout: tutorial
 title: How to Contribute to Refinery Tutorials
-category: tutorials
+category: tutorialsite
 author: Steven Heidel
---
+---
 
 It's easy to contribute to these Refinery tutorials!
 
@@ -15,11 +15,11 @@ It's easy to contribute to these Refinery tutorials!
 
 ## Create a tutorial
 
-* Take a look in the _posts folder, this is where all tutorials are located
+* Take a look in the "\_posts" folder, this is where all tutorials are located
 * Name your new tutorial appropriately using this guide:
     yyyy-mm-dd-name-of-the-tutorial.markdown
 * Add the appropriate metadata at the front of the tutorial
-    {% highlight %}
+    {% highlight YAML %}
     --
     layout: tutorial
     title: How to Contribute to Refinery Tutorials
@@ -35,7 +35,7 @@ It's easy to contribute to these Refinery tutorials!
     { % highlight ruby % } 
     Code goes here
     { % endhighlight % }
-* Take a look at other examples in the _posts folder
+* Take a look at other examples in the "\_posts" folder
 
 ## Submit the tutorial
 
