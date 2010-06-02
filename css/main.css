@@ -128,7 +128,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 		font-weight: bold;
 		margin: 0 0 .6em .2em;
 		text-decoration: none;
-		width: 427px;
+		width: 527px;
 	}
 	#banner h1 a:hover, #banner h1 a:active {
 		background: none;
@@ -136,7 +136,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 		text-shadow: none;
 	}
 	
-	#banner h1 strong {font-size: 0.36em; font-weight: normal;}
+	#banner h1 span {font-size: 0.36em; font-weight: normal;}
 	
 	/* Main Nav */
 	#banner nav {
