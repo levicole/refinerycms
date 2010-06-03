@@ -60,6 +60,8 @@ Test it out by installing and running jekyll
     gem install jekyll
     jekyll --server
 
+Then browse to [http://localhost:4000/](http://localhost:4000/)
+
 Make a pull request describing your new tutorial
 
 ### Thank you for helping out with refinery!
