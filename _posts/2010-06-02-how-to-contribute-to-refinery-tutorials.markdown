@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: How To Contribute to Refinery Tutorials
+title: How to Contribute to Refinery Tutorials
 description: 
   Learn how to contribute your own refinerycms tutorial to this site and help 
   make refinerycms usable for all
