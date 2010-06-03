@@ -4,7 +4,7 @@ title: How to Install Refinery
 description: 
   This tutorial will walk you through installing refinery for the very first time
 category: beginner
-author: Phillip Arndt
+author: Philip Arndt
 ---
 
 ## Installing and Setting Up Refinery
@@ -60,11 +60,6 @@ Next create your database and fill it with Refinery's default data:
 
     rake db:setup
 
-Note: The news engine that was previously in Refinery's core was extracted into a separate gem / plugin to be found here:
-
-    http://github.com/resolve/refinerycms-news
-
-Now, news should be up and running.
 
 ### 3. Starting up your site
 
