@@ -39,13 +39,15 @@ Now you will need to make sure that you specify the correct database driver and 
 The default choices are mysql and unicorn but to change them open up ``Gemfile`` which is in your application's root directory.
 You'll see a section like this:
 
-    # Specify the database driver as appropriate for your application (only one).
-    gem 'mysql', :require => 'mysql'
-    #gem 'sqlite3-ruby', :require => 'sqlite3'
+{% highlight ruby %}
+# Specify the database driver as appropriate for your application (only one).
+gem 'mysql', :require => 'mysql'
+#gem 'sqlite3-ruby', :require => 'sqlite3'
 
-    # Specify your favourite web server (only one).
-    gem 'unicorn', :group => :development
-    #gem 'mongrel', :group => :development
+# Specify your favourite web server (only one).
+gem 'unicorn', :group => :development
+#gem 'mongrel', :group => :development
+{% endhighlight %}
 
 To choose a different driver or web server just comment out the one we've pre-selected and uncomment or write the one you want instead.
 

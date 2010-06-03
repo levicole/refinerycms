@@ -13,7 +13,9 @@ This tutorial assumes that you know how to use Heroku and you've already got an 
 
 Refinery is often used on Heroku, so it's very easy to switch over the storage. Simply add/change one setting:
 
-    Refinery.s3_backend = true
+{% highlight ruby %}
+Refinery.s3_backend = true
+{% endhighlight %}
 
 in your ``config/environments/production.rb`` file to make Refinery store files uploaded on Amazon S3.
 
