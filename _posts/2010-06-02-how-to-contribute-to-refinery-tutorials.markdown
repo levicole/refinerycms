@@ -43,7 +43,7 @@ Add the appropriate metadata at the front of the tutorial
 
 Write your tutorial using markdown
 
-You can surround your code with the following to highlight it
+You can surround your code with the following to highlight it: (doesn't work in textile)
 
     { % highlight ruby % } 
     Make sure you remove the space between { and %
