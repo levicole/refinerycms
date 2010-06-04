@@ -1,7 +1,7 @@
 ---
 layout: tutorial
 title: Using SASS in your themes
-description: 
+description:
   [Insert description here]
 category: intermediate
 author: nrhammond
@@ -11,12 +11,12 @@ To use sass templates with your theme you just need to add the location of your 
 
 Create the "sass" directory within your theme's stylesheets directory, usually in:
 
-    RAILS_ROOT + "/themes/mytheme/stylesheets"
+    Rails.root.join('/themes/mytheme/stylesheets')
 
 In your config/application.rb or config/environment.rb add this line
 {% highlight ruby %}
-Sass::Plugin.add_template_location(RAILS_ROOT + "/themes/my_theme/stylesheets/sass", 
-                                   RAILS_ROOT + "/themes/my_theme/stylesheets")
+Sass::Plugin.add_template_location(Rails.root.join('/themes/my_theme/stylesheets/sass').to_s,
+                                   Rails.root.join('/themes/my_theme/stylesheets').to_s)
 {% endhighlight %}
 
 This works with version 3.0.6 of HAML. The method "add_template_location" is fairly new and didn't exist in older versions.
