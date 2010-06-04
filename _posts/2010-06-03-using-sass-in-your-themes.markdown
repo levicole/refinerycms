@@ -11,13 +11,13 @@ To use sass templates with your theme you just need to add the location of your 
 
 Create the "sass" directory within your theme's stylesheets directory, usually in:
 
-    Rails.root.join('/themes/my_theme/stylesheets')
+    Rails.root.join('themes/my_theme/stylesheets')
 
 In your config/application.rb or config/environment.rb add this line
 {% highlight ruby %}
 Sass::Plugin.add_template_location(
-  Rails.root.join('/themes/my_theme/stylesheets/sass').to_s,
-  Rails.root.join('/themes/my_theme/stylesheets').to_s
+  Rails.root.join('themes/my_theme/stylesheets/sass').to_s,
+  Rails.root.join('themes/my_theme/stylesheets').to_s
 )
 {% endhighlight %}
 
