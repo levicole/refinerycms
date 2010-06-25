@@ -18,9 +18,8 @@
 	  
   	<div id="disqus_thread"></div>
     <script type="text/javascript">
-      /**
-        * var disqus_=identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
-        */
+      var disqus_="{{ page.url }}";
+       
       (function() {
        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
        dsq.src = 'http://refinerytutorials.disqus.com/embed.js';
@@ -30,8 +29,7 @@
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=refinerytutorials">comments powered by Disqus.</a></noscript>
     <a href="http://disqus.com" class="dsq-brlink">tutorial comments powered by <span class="logo-disqus">Disqus</span></a>
 	</section>
-
-	
+  
 	{% include extras.html %}
 	
 	{% include footer.html %}
