@@ -8,7 +8,7 @@ author: Peter Zlatnar
 ---
 In this tutorial I will show you how to implement gallery with portfolio plugin in few simple steps. Solution is quick and dirty, but despite that I hope you will find something helpful. Tutorial assumes that you have already portfolio plugin installed and created a few entries.
 
-Most of the work is done in pages plugin folder ``/vendor/plugins/pages`` except for javascript which is done in `/public/javascript` folder. Be aware I will be missing out ``/vendor/plugins/pages`` path for the most of the time.
+Most of the work is done in pages plugin folder ``/vendor/plugins/pages`` except for javascript which is done in `/public/javascripts` folder. Be aware I will be missing out ``/vendor/plugins/pages`` path for the most of the time.
 
 ## Preview
 ![alt text](../images/page_gallery.jpg "Page gallery")
