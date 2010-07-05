@@ -11,12 +11,12 @@ author: Philip Arndt
 
 ### 1. Get the Refinery code
 
-#### Install the Gem
+#### Install the Gem (recommended)
 
     gem install refinerycms
     refinery path/to/project
 
-#### Or, clone Refinery's GIT repository
+#### Or, clone Refinery's GIT repository (not recommended)
 
 The git repository is where all of the changes are made when any new code is written or existing code is updated. For this reason it is often better to use the gem or to checkout a particular tag (the latest is usually considered the most stable). So unless you want to use the latest code, checkout the latest tag by replacing 0.9.X.XX below with the appropriate version:
 
@@ -28,6 +28,8 @@ The git repository is where all of the changes are made when any new code is wri
     mv ./config/database.yml.example ./config/database.yml
 
 ### 2. Configuration
+
+#### __You can skip this entire step if you are using the gem.__
 
 Firstly, edit ``config/database.yml`` to reflect your database server details.
 
