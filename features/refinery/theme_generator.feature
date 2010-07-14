@@ -14,3 +14,16 @@ Feature: Theme generation
     And I should have a directory named "sexy_layout/javascripts"
     And I should have a "LICENSE"
     And I should have a "README"
+
+  @wip
+  Scenario: Generating a theme using haml
+    Given I have a refinery application
+    When I generate a theme with the name of "sexy_layout" with haml
+    Then I should have a directory named "sexy_layout"
+    And I should have a stylsheet named "sexy_layout/stylesheets/application.css"
+    And I should have a layout named "sexy_layout/views/layouts/application.html.haml"
+    And I should have a layout named "sexy_layout/views/pages/index.html.haml"
+    And I should have a layout named "sexy_layout/views/pages/show.html.haml"
+    And I should have a directory named "sexy_layout/javascripts"
+    And I should have a "LICENSE"
+    And I should have a "README"

@@ -18,6 +18,10 @@ When /^I generate a theme with the name of "([^"]*)"$/ do |name|
   Rails::Generator::Scripts::Generate.new.run([:theme, name], {:destination => @app_root, :quiet => true})
 end
 
+When /^I generate a theme with the name of "([^"]*)" with haml$/ do |name|
+  Rails::Generator::Scripts::Generate.new.run([:theme, name], {:destination => @app_root, :quiet => true, :haml => true})
+end
+
 Then /^I should have a directory named "([^"]*)"$/ do |name|
   File.exist?(File.join(@tmp_refinery_app_root, '/themes', name)).should be_true
 end
